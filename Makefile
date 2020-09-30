@@ -6,23 +6,32 @@ RM=rm -f
 
 EXEC=password_bf
 
+EXEC_HASH=generate_hash
+
 all: $(EXEC)
 
-$(EXEC):
+## password bf cracking commands
+
+build:
 	$(CC) $(FLAGS) password_bf.c -c -o password_bf.o
 	$(CC) password_bf.o -o $(EXEC) $(FLAGS)
 
-run:
-	./$(EXEC)
-
-clean:
-	$(RM) password_bf.o $(EXEC)
-
 exec:
-	./password_bf < password.in
+	./${EXEC} < password.in
 
 rerun:
-	make clean && make && make run
+	make clean && make build && make exec
 
-rerun-in:
-	make clean && make && make exec
+## hash helper commands
+
+build-hash:
+	${CC} ${FLAGS} generate_hash.c -c -o generate_hash.o
+	${CC} generate_hash.o -o ${EXEC_HASH} ${FLAGS}
+
+exec-hash:
+	./${EXEC_HASH}
+
+## general commands
+
+clean:
+	$(RM) password_bf.o $(EXEC) generate_hash.o ${EXEC_HASH}

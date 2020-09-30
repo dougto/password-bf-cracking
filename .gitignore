@@ -1,2 +1,4 @@
 password_bf.o
 password_bf
+generate_hash.o
+generate_hash
