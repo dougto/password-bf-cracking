@@ -3,13 +3,13 @@
 #include <openssl/md5.h>
 #include <string.h>
 
-#define MAX 5 // max size of password
+// MD5_DIGEST_LENGTH = 16
 
-typedef unsigned char byte;
+#define MAX 10 // max size of password
 
 char letters[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"; // possible symbols
 
-// MD5_DIGEST_LENGTH = 16
+typedef unsigned char byte;
 
 /*
  * Print a digest of MD5 hash.
