@@ -22,4 +22,7 @@ exec:
 	./password_bf < password.in
 
 rerun:
+	make clean && make && make run
+
+rerun-in:
 	make clean && make && make exec

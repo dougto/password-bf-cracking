@@ -3,7 +3,7 @@
 #include <openssl/md5.h>
 #include <string.h>
 
-#define MAX 10 // max size of password
+#define MAX 5 // max size of password
 
 typedef unsigned char byte;
 
@@ -53,7 +53,7 @@ void iterate(byte *hash1, byte *hash2, char *str, int idx, int len, int *ok)
 			if (strncmp((char *)hash1, (char *)hash2, MD5_DIGEST_LENGTH) == 0)
 			{
 				printf("found: %s\n", str);
-				//print_digest(hash2);
+				print_digest(hash2);
 				*ok = 1;
 			}
 		}
@@ -77,8 +77,8 @@ void strHex_to_byte(char *str, byte *hash)
 
 int main(int argc, char **argv)
 {
-	char str[MAX + 1]; // array of length 11
-	int lenMax = MAX;	 // 10
+	char str[MAX + 1];
+	int lenMax = MAX;
 	int len;
 	int ok = 0, r;
 	char hash1_str[2 * MD5_DIGEST_LENGTH + 1];
@@ -99,12 +99,12 @@ int main(int argc, char **argv)
 	strHex_to_byte(hash1_str, hash1);
 
 	memset(hash2, 0, MD5_DIGEST_LENGTH);
-	//print_digest(hash1);
+	print_digest(hash1);
 
 	// Generate all possible passwords of different sizes.
 	for (len = 1; len <= lenMax; len++)
 	{
-		printf("main loop %d/%d \n", len, lenMax);
+		printf("password length %d/%d \n", len, lenMax);
 		memset(str, 0, len + 1);
 		iterate(hash1, hash2, str, 0, len, &ok);
 	}
