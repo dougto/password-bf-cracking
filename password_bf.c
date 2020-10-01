@@ -8,7 +8,7 @@
 
 #define MAX 10 // max size of password
 
-char letters[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"; // possible symbols
+char letters[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"; // 36 possible symbols
 
 typedef unsigned char byte;
 
