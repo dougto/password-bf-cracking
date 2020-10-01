@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <openssl/md5.h>
 #include <string.h>
+#include <time.h>
 
 // MD5_DIGEST_LENGTH = 16
 
@@ -10,6 +11,15 @@
 char letters[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"; // possible symbols
 
 typedef unsigned char byte;
+
+clock_t Ticks[2];
+
+void print_time(int mark)
+{
+	Ticks[1] = clock();
+	double time = (Ticks[1] - Ticks[0]) * 1000.0 / CLOCKS_PER_SEC;
+	printf("mark: %i time: %g ms \n", mark, time);
+}
 
 /*
  * Print a digest of MD5 hash.
@@ -77,6 +87,8 @@ void strHex_to_byte(char *str, byte *hash)
 
 int main(int argc, char **argv)
 {
+	Ticks[0] = clock();
+
 	char str[MAX + 1];
 	int lenMax = MAX;
 	int len;
@@ -108,4 +120,5 @@ int main(int argc, char **argv)
 		memset(str, 0, len + 1);
 		iterate(hash1, hash2, str, 0, len, &ok);
 	}
+	print_time(1);
 }
