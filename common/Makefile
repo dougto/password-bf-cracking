@@ -10,11 +10,11 @@ all: $(EXEC)
 
 ## hash helper commands
 
-build-hash:
+build:
 	${CC} ${FLAGS} generate_hash.c -c -o generate_hash.o
 	${CC} generate_hash.o -o ${EXEC} ${FLAGS}
 
-exec-hash:
+exec:
 	./${EXEC}
 
 ## general commands

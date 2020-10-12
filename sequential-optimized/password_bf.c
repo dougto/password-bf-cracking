@@ -40,33 +40,35 @@ void iterate(byte *hash1, byte *hash2, char *str, int idx, int len, int *ok)
 {
 	int c;
 
+	// if idx reached MAX search length, computation is over;
+	if (idx == MAX)
+		return;
+
 	// 'ok' determines when the algorithm matches.
 	if (*ok)
 		return;
-	if (idx < (len - 1))
+
+	// Iterate for all letter combination.
+	for (c = 0; c < strlen(letters) && *ok == 0; ++c)
 	{
-		// Iterate for all letter combination.
-		for (c = 0; c < strlen(letters) && *ok == 0; ++c)
+		str[idx] = letters[c];
+		// check if password matches
+		MD5((byte *)str, idx + 1, hash2);
+		if (strncmp((char *)hash1, (char *)hash2, MD5_DIGEST_LENGTH) == 0)
 		{
-			str[idx] = letters[c];
-			// Recursive call
-			iterate(hash1, hash2, str, idx + 1, len, ok);
-		}
-	}
-	else
-	{
-		// Include all last letters and compare the hashes.
-		for (c = 0; c < strlen(letters) && *ok == 0; ++c)
-		{
-			str[idx] = letters[c];
-			MD5((byte *)str, strlen(str), hash2);
-			if (strncmp((char *)hash1, (char *)hash2, MD5_DIGEST_LENGTH) == 0)
+			char print[idx + 1];
+			print[idx + 1] = 0;
+			for (c = 0; c < idx + 1; ++c)
 			{
-				printf("found: %s\n", str);
-				print_digest(hash2);
-				*ok = 1;
+				print[c] = str[c];
 			}
+
+			printf("found: %s\n", print);
+			print_digest(hash2);
+			*ok = 1;
 		}
+		// Recursive call
+		iterate(hash1, hash2, str, idx + 1, len, ok);
 	}
 }
 
@@ -90,8 +92,6 @@ int main(int argc, char **argv)
 	Ticks[0] = clock();
 
 	char str[MAX + 1];
-	int lenMax = MAX;
-	int len;
 	int ok = 0, r;
 	char hash1_str[2 * MD5_DIGEST_LENGTH + 1];
 	byte hash1[MD5_DIGEST_LENGTH]; // password hash
@@ -114,11 +114,8 @@ int main(int argc, char **argv)
 	print_digest(hash1);
 
 	// Generate all possible passwords of different sizes.
-	for (len = 1; len <= lenMax; len++)
-	{
-		printf("password length %d/%d \n", len, lenMax);
-		memset(str, 0, len + 1);
-		iterate(hash1, hash2, str, 0, len, &ok);
-	}
+	memset(str, 0, MAX + 1);
+	iterate(hash1, hash2, str, 0, MAX, &ok);
+
 	print_time(1);
 }
