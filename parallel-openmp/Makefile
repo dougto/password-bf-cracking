@@ -2,6 +2,10 @@ FLAGS=-O3 -lssl -lcrypto -I /usr/local/opt/openssl/include -L /usr/local/opt/ope
 
 CC=/usr/local/bin/gcc-10
 
+# FLAGS=-O3 -lssl -lcrypto -I /usr/local/opt/openssl/include -L /usr/local/opt/openssl/lib
+
+# CC=gcc
+
 RM=rm -f
 
 EXEC=password_bf
@@ -17,7 +21,10 @@ build:
 	$(CC) password_bf.o -o $(EXEC) $(FLAGS)
 
 exec:
-	export OMP_NUM_THREADS=${NUM_OF_THREADS} && ./${EXEC} < password.in
+	./${EXEC} < password.in
+
+expt:
+	export OMP_NUM_THREADS=${NUM_OF_THREADS}
 
 rerun:
 	make clean && make build && make exec
