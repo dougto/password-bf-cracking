@@ -2,10 +2,6 @@ FLAGS=-O3 -lssl -lcrypto -I /usr/local/opt/openssl/include -L /usr/local/opt/ope
 
 CC=/usr/local/bin/gcc-10
 
-# FLAGS=-O3 -lssl -lcrypto -I /usr/local/opt/openssl/include -L /usr/local/opt/openssl/lib
-
-# CC=gcc
-
 RM=rm -f
 
 EXEC=password_bf
