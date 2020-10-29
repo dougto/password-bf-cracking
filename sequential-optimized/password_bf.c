@@ -6,9 +6,9 @@
 
 // MD5_DIGEST_LENGTH = 16
 
-#define MAX 10 // max size of password
+#define MAX 6 // max size of password
 
-char letters[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"; // 36 possible symbols
+char letters[] = "ABCDEFGHIJKLMNOPQRS1234567890";
 
 typedef unsigned char byte;
 

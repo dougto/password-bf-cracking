@@ -3,23 +3,15 @@
 #include <openssl/md5.h>
 #include <string.h>
 #include <time.h>
+#include <omp.h>
 
 // MD5_DIGEST_LENGTH = 16
 
-#define MAX 7 // max size of password
+#define MAX 6 // max size of password
 
-char letters[] = "ABCDEFGHIJKLMNOPQRS1234567890"; // 36 possible symbols
+char letters[] = "ABCDEFGHIJKLMNOPQRS1234567890";
 
 typedef unsigned char byte;
-
-clock_t Ticks[2];
-
-void print_time(int mark)
-{
-	Ticks[1] = clock();
-	double time = (Ticks[1] - Ticks[0]) * 1000.0 / CLOCKS_PER_SEC;
-	printf("mark: %i time: %g ms \n", mark, time);
-}
 
 /*
  * Print a digest of MD5 hash.
@@ -85,7 +77,7 @@ void strHex_to_byte(char *str, byte *hash)
 
 int main(int argc, char **argv)
 {
-	Ticks[0] = clock();
+	double time1 = omp_get_wtime();
 
 	int ok = 0, r;
 	char hash1_str[2 * MD5_DIGEST_LENGTH + 1];
@@ -138,5 +130,8 @@ int main(int argc, char **argv)
 		}
 	}
 
-	print_time(1);
+	double time2 = omp_get_wtime();
+	double totalTime = time2 - time1;
+
+	printf("Time to execute: %f seconds", totalTime);
 }
