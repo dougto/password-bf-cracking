@@ -9,7 +9,7 @@
 
 #define MAX 6 // max size of password
 
-char letters[] = "ABCDEFGHIJKLMNOPQRS1234567890";
+char letters[] = "ABCDEFGHIJKLMNOPQRS123";
 
 typedef unsigned char byte;
 
